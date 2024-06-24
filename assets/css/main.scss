@@ -15,6 +15,21 @@ body, html {
     font-weight: 500;
     font-family: "Pretendard", serif;
 }
+.row {
+    display: flex;
+    flex-direction: row;
+
+}
+.flex-nowrap {
+    flex-wrap: nowrap;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-warp {
+    flex-wrap: wrap;
+}
 #__nuxt, #__layout{
     height: 100%;
 }

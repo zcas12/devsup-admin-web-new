@@ -4,9 +4,9 @@
       <el-row class="mb-3 px-2 py-2 row items-end">
         <div>
           <el-image
-            :src="logo"
-            style="width: 120px"
-            alt=""
+              :src="logo"
+              style="width: 120px"
+              alt=""
           />
         </div>
         <h2 class="title ml-auto">개발지원실 관리자</h2>
@@ -30,9 +30,8 @@
               size="large"
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              @keyup.native.enter="authenticate()"
               v-model="account.password"
-            >
+          >
             <template #prepend>
               <el-icon><Lock/></el-icon>
             </template>
@@ -44,53 +43,69 @@
             size="large"
             class="login-btn"
             :loading="processLogin"
-            @click="authenticate()"
         >로그인
         </el-button>
       </el-row>
     </el-card>
   </el-row>
 </template>
-<script setup>
-import { ref } from 'vue'
-import logo from '@/assets/img/logo.png'
+<script>
+import logo from '@/assets/img/logo.png';
 import {Lock, UserFilled} from "@element-plus/icons-vue";
-import {useAuthStore} from "~/stores/auth.js";
-const router = useRouter();
-const authStore = useAuthStore();
-definePageMeta({
-  layout: 'blank'
-})
-const account = ref({
-  username: null,
-  password: null
-})
-const rememberEmail = ref(false)
-const processLogin = ref(false)
+import {useAuthStore} from '@/stores/auth';
 
-
-/*Methods 정의*/
-const authenticate = () => {
-  processLogin.value = true;
-  const param = {
-    username: account.value.username,
-    password: account.value.password
-  }
-  authStore.login(param).then((res)=>{
-    if (res.resultCd !== '200'){
-      processLogin.value = false;
-      if (res.resultMsg) alert(res.resultMsg);
-      else throw new Error('로그인에 실패했습니다..');
-    }else{
-      router.push('/dashboard')
+export default {
+  setup() {
+    definePageMeta({
+      layout: 'blank',
+      middleware: 'auth'
+    })
+  },
+  components: {UserFilled, Lock},
+  data:() => ({
+    logo:logo,
+    account:{
+      username:null,
+      password:null
+    },
+    rememberEmail: false,
+    processLogin: false
+  }),
+  created() {
+    console.log("created")
+  },
+  mounted() {
+    console.log("mounted");
+    this.test()
+  },
+  computed:{
+    testData(){
+      return useAuthStore().token
     }
-  }).catch((e)=>{
-    processLogin.value = false;
-    alert("로그인에 실패했습니다.");
-    console.log(e)
-  })
+  },
+  methods:{
+    test(){
+      console.log("test")
+      useAuthStore().actionsTest()
+      console.log(useAuthStore().getToken)
+    }
+  }
 }
+</script>
+<script setup>
+/*definePageMeta({
+  layout: 'blank',
+  middleware: 'auth'
+})*/
 
+console.log("1");
+
+onBeforeMount(() => {
+  console.log("onBeforeMount")
+})
+onMounted(() => {
+  console.log("onMounted")
+})
 </script>
 <style lang="scss" scoped>
 .container {

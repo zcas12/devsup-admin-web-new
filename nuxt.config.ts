@@ -13,12 +13,27 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ['@element-plus/nuxt'],
-  css: ['~/assets/css/main.scss'],
+  modules: ['@element-plus/nuxt','@pinia/nuxt'],
+  plugins: [
+    '~/plugins/lodash.ts',
+    '~/plugins/dayjs.ts',
+    '~/plugins/axios.ts',
+  ],
+  css: ['~/assets/css/main.scss', '@mdi/font/css/materialdesignicons.min.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+    },
+  },
+  vite: {
+    server: {
+      proxy: {
+        "/devsup": {
+          target: "http://10.0.0.185:8080/",
+          changeOrigin: true,
+        },
+      },
     },
   },
 })
