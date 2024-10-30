@@ -46,7 +46,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import {useLayoutsStore} from "~/stores/layouts.ts";
-import logo from '@/assets/img/logo.png'
+import logo from '@/assets/img/logo.svg'
 import {ChatLineRound, Document, Platform} from "@element-plus/icons-vue";
 const route = useRoute();
 
