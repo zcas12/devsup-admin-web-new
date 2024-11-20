@@ -28,6 +28,17 @@ export const useAuthStore = defineStore('auth', {
                 console.error('Error fetching:', error)
                 return error
             }
+        },
+        async signUp(userInfo){
+            try {
+                const { $axios } = useNuxtApp();
+                console.log("userInfo",userInfo);
+                const {data} = await $axios.post(`${authPath}/signup`, userInfo)
+                return data
+            }catch (error) {
+                console.error('Error fetching:', error)
+                return error
+            }
         }
     }
 })
